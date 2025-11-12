@@ -41,8 +41,15 @@ class Product(BaseModel):
 # Add your own schemas here:
 # --------------------------------------------------
 
-# Note: The Flames database viewer will automatically:
-# 1. Read these schemas from GET /schema endpoint
-# 2. Use them for document validation when creating/editing
-# 3. Handle all database operations (CRUD) directly
-# 4. You don't need to create any database endpoints!
+class ImageGeneration(BaseModel):
+    """
+    Image generations history
+    Collection name: "imagegeneration"
+    """
+    prompt: str = Field(..., description="Text prompt used to generate the image")
+    provider: Optional[str] = Field(None, description="Which AI provider was used (openai, stability)")
+    model: Optional[str] = Field(None, description="Model identifier used for generation")
+    image_b64: Optional[str] = Field(None, description="Base64-encoded image data (may be omitted to keep DB light)")
+    seed: Optional[int] = Field(None, description="Random seed if provided by provider")
+    width: Optional[int] = Field(None, description="Image width")
+    height: Optional[int] = Field(None, description="Image height")
